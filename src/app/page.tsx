@@ -39,6 +39,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
+    { href: "market", label: "Market" },
     { href: "#features", label: "Features" },
     { href: "#demo", label: "How It Works" },
     { href: "#faq", label: "FAQ" },
@@ -50,7 +51,7 @@ const Header = () => {
         <a href="#" className="font-bold text-xl text-white">
           HypeTrade.live
         </a>
-        
+
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <a key={link.href} href={link.href} className="text-gray-300 hover:text-white transition-colors">
@@ -60,21 +61,21 @@ const Header = () => {
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
-           <a href="#waitlist" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-sm transition-transform transform hover:scale-105">
+          <a href="#waitlist" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full text-sm transition-transform transform hover:scale-105">
             Join Waitlist
           </a>
         </div>
-        
+
         <div className="md:hidden">
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white">
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
-      
+
       <div className={`md:hidden absolute top-full left-0 w-full bg-gray-900/95 backdrop-blur-md transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
         <nav className="flex flex-col items-center gap-6 py-8">
-           {navLinks.map((link) => (
+          {navLinks.map((link) => (
             <a key={link.href} href={link.href} className="text-gray-300 hover:text-white transition-colors text-lg" onClick={() => setIsMenuOpen(false)}>
               {link.label}
             </a>
@@ -144,15 +145,16 @@ export default function HypeTradeLandingPage() {
   const [ctaRef, ctaIsVisible] = useScrollAnimation<HTMLElement>();
   const [teamRef, teamIsVisible] = useScrollAnimation<HTMLElement>();
   const [faqRef, faqIsVisible] = useScrollAnimation<HTMLElement>();
-  
+
   // Helper for animation classes
-  const animationClasses = (isVisible: boolean) => 
+  const animationClasses = (isVisible: boolean) =>
     `transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`;
 
   return (
+
     <div className="bg-gray-900 text-gray-200 font-sans overflow-x-hidden">
       <Header />
-      
+
       <main className="container mx-auto px-6 py-12 md:px-12 pt-28 md:pt-32">
 
         <section ref={heroRef} className={`text-center py-20 md:py-32 ${animationClasses(heroIsVisible)}`}>
@@ -173,9 +175,9 @@ export default function HypeTradeLandingPage() {
           <p className="mt-8 text-gray-500 text-sm font-semibold tracking-wider">
             “No money. Just hype. All skill.”
           </p>
-           <p className="text-xs text-gray-600 mt-16 max-w-4xl mx-auto">
+          <p className="text-xs text-gray-600 mt-16 max-w-4xl mx-auto">
             HypeTrade is currently a virtual simulation platform. In the future, we aim to responsibly evolve into a real-value trading ecosystem for creators — with legal and regulatory compliance at its core.
-           </p>
+          </p>
         </section>
 
         <hr className="border-gray-800/50" />
@@ -215,26 +217,26 @@ export default function HypeTradeLandingPage() {
         <section ref={marketRef} className={`py-20 md:py-28 ${animationClasses(marketIsVisible)}`}>
           <h2 className="text-4xl font-bold text-white text-center mb-12">Who’s Gaining Hype Right Now?</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-              <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700/50 text-center">
-                  <p className="font-bold text-white text-lg">MrBeast</p>
-                  <p className="text-2xl font-mono text-green-400 mt-1">₹72.41</p>
-                  <p className="text-sm text-green-400 font-semibold">▲ 3.2%</p>
-              </div>
-              <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700/50 text-center">
-                  <p className="font-bold text-white text-lg">Mythpat</p>
-                  <p className="text-2xl font-mono text-red-400 mt-1">₹39.10</p>
-                  <p className="text-sm text-red-400 font-semibold">▼ 1.8%</p>
-              </div>
-              <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700/50 text-center">
-                  <p className="font-bold text-white text-lg">CarryMinati</p>
-                  <p className="text-2xl font-mono text-green-400 mt-1">₹58.99</p>
-                  <p className="text-sm text-green-400 font-semibold">▲ 5.1%</p>
-              </div>
-              <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700/50 text-center">
-                  <p className="font-bold text-white text-lg">MKBHD</p>
-                  <p className="text-2xl font-mono text-green-400 mt-1">₹65.70</p>
-                  <p className="text-sm text-green-400 font-semibold">▲ 2.5%</p>
-              </div>
+            <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700/50 text-center">
+              <p className="font-bold text-white text-lg">MrBeast</p>
+              <p className="text-2xl font-mono text-green-400 mt-1">₹72.41</p>
+              <p className="text-sm text-green-400 font-semibold">▲ 3.2%</p>
+            </div>
+            <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700/50 text-center">
+              <p className="font-bold text-white text-lg">Mythpat</p>
+              <p className="text-2xl font-mono text-red-400 mt-1">₹39.10</p>
+              <p className="text-sm text-red-400 font-semibold">▼ 1.8%</p>
+            </div>
+            <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700/50 text-center">
+              <p className="font-bold text-white text-lg">CarryMinati</p>
+              <p className="text-2xl font-mono text-green-400 mt-1">₹58.99</p>
+              <p className="text-sm text-green-400 font-semibold">▲ 5.1%</p>
+            </div>
+            <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700/50 text-center">
+              <p className="font-bold text-white text-lg">MKBHD</p>
+              <p className="text-2xl font-mono text-green-400 mt-1">₹65.70</p>
+              <p className="text-sm text-green-400 font-semibold">▲ 2.5%</p>
+            </div>
           </div>
           <p className="text-center text-gray-500 mt-6 text-sm">📈 These are fictional, demo values. No real money involved.</p>
         </section>
@@ -260,40 +262,40 @@ export default function HypeTradeLandingPage() {
         </section>
 
         <hr className="border-gray-800/50" />
-        
+
         <section ref={peekRef} className={`py-20 md:py-28 text-center ${animationClasses(peekIsVisible)}`}>
-            <h2 className="text-4xl font-bold text-white mb-12">Get a Sneak Peek</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="bg-gray-800/50 border border-gray-700/50 rounded-lg h-80 flex items-center justify-center"><p className="text-gray-500">Creator Market Mockup</p></div>
-                <div className="bg-gray-800/50 border border-gray-700/50 rounded-lg h-80 flex items-center justify-center"><p className="text-gray-500">Trade Screen Mockup</p></div>
-                <div className="bg-gray-800/50 border border-gray-700/50 rounded-lg h-80 flex items-center justify-center"><p className="text-gray-500">User Portfolio Mockup</p></div>
-                <div className="bg-gray-800/50 border border-gray-700/50 rounded-lg h-80 flex items-center justify-center"><p className="text-gray-500">Leaderboard Mockup</p></div>
-            </div>
-            <p className="text-gray-500 text-sm mt-8">Designs shown are part of a prototype and subject to change before public release.</p>
+          <h2 className="text-4xl font-bold text-white mb-12">Get a Sneak Peek</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-gray-800/50 border border-gray-700/50 rounded-lg h-80 flex items-center justify-center"><p className="text-gray-500">Creator Market Mockup</p></div>
+            <div className="bg-gray-800/50 border border-gray-700/50 rounded-lg h-80 flex items-center justify-center"><p className="text-gray-500">Trade Screen Mockup</p></div>
+            <div className="bg-gray-800/50 border border-gray-700/50 rounded-lg h-80 flex items-center justify-center"><p className="text-gray-500">User Portfolio Mockup</p></div>
+            <div className="bg-gray-800/50 border border-gray-700/50 rounded-lg h-80 flex items-center justify-center"><p className="text-gray-500">Leaderboard Mockup</p></div>
+          </div>
+          <p className="text-gray-500 text-sm mt-8">Designs shown are part of a prototype and subject to change before public release.</p>
         </section>
-        
+
         <hr className="border-gray-800/50" />
 
         <section id="waitlist" ref={ctaRef} className={`py-20 md:py-28 text-center bg-blue-900/20 rounded-xl my-16 scroll-mt-20 ${animationClasses(ctaIsVisible)}`}>
-            <h2 className="text-4xl font-bold text-white">Ready to Trade the Hype?</h2>
-            <p className="text-gray-300 mt-4 max-w-xl mx-auto">Sign up to get early access and updates as the platform evolves.</p>
-            <div className="mt-8 flex justify-center">
-                 <a href="#waitlist-form" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105">
-                    Join the Waitlist
-                </a>
-            </div>
+          <h2 className="text-4xl font-bold text-white">Ready to Trade the Hype?</h2>
+          <p className="text-gray-300 mt-4 max-w-xl mx-auto">Sign up to get early access and updates as the platform evolves.</p>
+          <div className="mt-8 flex justify-center">
+            <a href="#waitlist-form" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105">
+              Join the Waitlist
+            </a>
+          </div>
         </section>
-        
+
         <hr className="border-gray-800/50" />
 
         <section ref={teamRef} className={`py-20 md:py-28 max-w-3xl mx-auto text-center ${animationClasses(teamIsVisible)}`}>
-            <h2 className="text-4xl font-bold text-white mb-6">Who’s Behind HypeTrade?</h2>
-            <p className="text-lg text-gray-300">
-                &quot;We&apos;re building a fun, data-powered platform that gamifies the creator economy — responsibly.&quot;
-            </p>
-            <p className="mt-6 text-gray-400">
-                We’re building a safe, fair, and transparent creator economy — starting with virtual trading today, and laying the groundwork for real-world growth tomorrow.
-            </p>
+          <h2 className="text-4xl font-bold text-white mb-6">Who’s Behind HypeTrade?</h2>
+          <p className="text-lg text-gray-300">
+            &quot;We&apos;re building a fun, data-powered platform that gamifies the creator economy — responsibly.&quot;
+          </p>
+          <p className="mt-6 text-gray-400">
+            We’re building a safe, fair, and transparent creator economy — starting with virtual trading today, and laying the groundwork for real-world growth tomorrow.
+          </p>
         </section>
 
         <hr className="border-gray-800/50" />
@@ -315,27 +317,27 @@ export default function HypeTradeLandingPage() {
       </main>
 
       <footer className="bg-gray-900/50 border-t border-gray-800/50">
-          <div className="container mx-auto px-6 py-8 md:px-12">
-              <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                  <div className="text-center md:text-left">
-                      <p className="font-bold text-lg text-white">HypeTrade.live</p>
-                      <p className="text-gray-400 text-sm mt-1">Contact: <a href="mailto:hello@hypetrade.live" className="hover:text-blue-400">hello@hypetrade.live</a></p>
-                  </div>
-                  <div className="flex gap-4">
-                      <a href="#" className="text-gray-400 hover:text-white"><Twitter size={24} /></a>
-                      <a href="#" className="text-gray-400 hover:text-white"><Instagram size={24} /></a>
-                      <a href="#" className="text-gray-400 hover:text-white"><DiscAlbum size={24} /></a>
-                  </div>
-              </div>
-              <div className="mt-8 pt-6 border-t border-gray-800/50 flex flex-col md:flex-row justify-between items-center text-center text-sm text-gray-500">
-                  <p>&copy; {new Date().getFullYear()} HypeTrade. All Rights Reserved.</p>
-                  <div className="flex gap-4 mt-4 md:mt-0">
-                      <a href="#" className="hover:text-gray-200">Terms of Use</a>
-                      <a href="#" className="hover:text-gray-200">Privacy Policy</a>
-                      <a href="#" className="hover:text-gray-200">Disclaimer</a>
-                  </div>
-              </div>
+        <div className="container mx-auto px-6 py-8 md:px-12">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="text-center md:text-left">
+              <p className="font-bold text-lg text-white">HypeTrade.live</p>
+              <p className="text-gray-400 text-sm mt-1">Contact: <a href="mailto:hello@hypetrade.live" className="hover:text-blue-400">hello@hypetrade.live</a></p>
+            </div>
+            <div className="flex gap-4">
+              <a href="#" className="text-gray-400 hover:text-white"><Twitter size={24} /></a>
+              <a href="#" className="text-gray-400 hover:text-white"><Instagram size={24} /></a>
+              <a href="#" className="text-gray-400 hover:text-white"><DiscAlbum size={24} /></a>
+            </div>
           </div>
+          <div className="mt-8 pt-6 border-t border-gray-800/50 flex flex-col md:flex-row justify-between items-center text-center text-sm text-gray-500">
+            <p>&copy; {new Date().getFullYear()} HypeTrade. All Rights Reserved.</p>
+            <div className="flex gap-4 mt-4 md:mt-0">
+              <a href="#" className="hover:text-gray-200">Terms of Use</a>
+              <a href="#" className="hover:text-gray-200">Privacy Policy</a>
+              <a href="#" className="hover:text-gray-200">Disclaimer</a>
+            </div>
+          </div>
+        </div>
       </footer>
     </div>
   );
