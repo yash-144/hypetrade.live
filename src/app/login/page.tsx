@@ -2,6 +2,9 @@
 
 import Link from "next/link";
 import { LoginForm } from "./LoginForm";
+import { signIn, useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const GlobalStyles = () => (
   <style jsx global>{`
@@ -20,6 +23,31 @@ const GlobalStyles = () => (
 );
 
 export default function LoginPage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "authenticated" && session?.user?.id) {
+      // Only call custom-login if cookie not already set
+      if (!document.cookie.includes("session=")) {
+        fetch("/api/custom-login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId: session.user.id }),
+        })
+          .then((res) => {
+            if (res.ok) {
+              router.push("/market");
+            }
+          });
+      } else {
+        router.push("/market");
+      }
+    }
+  }, [status, session, router]);
+
   return (
     <>
       <GlobalStyles />
@@ -38,6 +66,22 @@ export default function LoginPage() {
 
             {/* Login Form */}
             <LoginForm />
+
+            {/* Google Sign-in */}
+            <div>
+              <p className="text-sm text-gray-500 text-center mt-6">
+                OR
+              </p>
+            </div>
+            <div className="mt-6">
+              <button
+                type="button"
+                onClick={() => signIn("google")} // don't set callbackUrl here
+                className="w-full flex justify-center items-center gap-2 py-3 px-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+              >
+                Sign in with Google
+              </button>
+            </div>
 
             {/* Sign Up Link */}
             <div className="mt-8 text-center">

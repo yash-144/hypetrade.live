@@ -1,11 +1,8 @@
-// Add this at the very top of the file to enable client-side interactivity
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Search, ArrowUpRight, ArrowDownRight, CheckCircle, Flame, Sparkles, ChevronDown, Bell, User } from 'lucide-react';
+import { Search, ArrowUpRight, ArrowDownRight, CheckCircle, Flame, Sparkles, ChevronDown } from 'lucide-react';
 import { LineChart, Line, ResponsiveContainer } from 'recharts';
-import React from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 
 // --- DATA (Simulating fetch from /data/creators.ts) ---
@@ -16,50 +13,12 @@ const allCreators = [
   { id: 4, name: "CarryMinati", image: "https://i.pravatar.cc/150?u=carryminati", price: 59.30, change: -0.50, changeType: 'decrease' as const, tag: '🔥 Trending', priceHistory: [{v: 65}, {v: 62}, {v: 63}, {v: 60}, {v: 61}, {v: 60}, {v: 59}] },
   { id: 5, name: "T-Series", image: "https://i.pravatar.cc/150?u=tseries", price: 90.80, change: 10.15, changeType: 'increase' as const, tag: '✨ New', priceHistory: [{v: 70}, {v: 75}, {v: 78}, {v: 82}, {v: 85}, {v: 88}, {v: 90}] },
   { id: 6, name: "Dude Perfect", image: "https://i.pravatar.cc/150?u=dudeperfect", price: 33.25, change: 1.05, changeType: 'increase' as const, tag: null, priceHistory: [{v: 30}, {v: 31}, {v: 32}, {v: 31}, {v: 32}, {v: 33}] },
-  { id: 7, name: "Emma Chamberlain", image: "https://i.pravatar.cc/150?u=emma", price: 25.50, change: -2.30, changeType: 'decrease' as const, tag: null, priceHistory: [{v: 28}, {v: 27}, {v: 26}, {v: 27}, {v: 26}, {v: 25}, {v: 25}] },
-  { id: 8, name: "Ninja", image: "https://i.pravatar.cc/150?u=ninja", price: 18.90, change: 0.45, changeType: 'increase' as const, tag: null, priceHistory: [{v: 18}, {v: 19}, {v: 18.5}, {v: 18.7}, {v: 18.6}, {v: 18.8}, {v: 18.9}] },
 ];
 
 type Creator = typeof allCreators[0];
 type SortOption = 'trending' | 'price' | 'change';
 
-// --- REUSABLE UI COMPONENTS (/components/) ---
-
-const Header = () => (
-    <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
-        <Link href="/" className="text-3xl font-extrabold tracking-tight">
-            <span className="bg-clip-text">
-                HypeTrade
-            </span>
-            <span>.live</span>
-        </Link>
-        <div className="flex items-center gap-4">
-            <button className="text-gray-400 hover:text-white transition-colors">
-                <Bell size={22} />
-            </button>
-            <Link href="/login" className="flex items-center gap-2 text-white bg-white/5 px-3 py-1.5 rounded-full border border-white/10 hover:bg-white/10 transition-colors">
-                <User size={18} />
-                <span className="text-sm font-medium">Login</span>
-            </Link>
-        </div>
-    </header>
-);
-
-const Ticker = () => (
-    <div className="bg-black/50 py-2.5 overflow-hidden border-y border-white/10">
-        <div className="flex animate-ticker-scroll whitespace-nowrap" style={{ animation: 'ticker-scroll 40s linear infinite' }}>
-            <p className="text-sm text-gray-400 mx-4 font-semibold">📊 Top Movers Today:</p>
-            {[...allCreators, ...allCreators].map((c, index) => (
-                <span key={`${c.id}-${index}`} className="text-sm mx-4">
-                    <span className="font-semibold text-white">{c.name}</span>
-                    <span className={`ml-2 font-bold ${c.changeType === 'increase' ? 'text-green-400' : 'text-red-400'}`}>
-                        {c.changeType === 'increase' ? '▲' : '▼'} {c.change}%
-                    </span>
-                </span>
-            ))}
-        </div>
-    </div>
-);
+// --- REUSABLE UI COMPONENTS ---
 
 const CreatorCard = ({ creator }: { creator: Creator }) => {
   const isIncrease = creator.changeType === 'increase';
@@ -76,7 +35,7 @@ const CreatorCard = ({ creator }: { creator: Creator }) => {
             )}
             
             <div className="flex flex-col items-center">
-                <Image src={creator.image} alt={creator.name} className="w-20 h-20 rounded-full object-cover ring-2 ring-white/10 mb-3" width={80} height={80}/>
+                <Image src={creator.image} alt={creator.name} className="w-20 h-20 rounded-full object-cover ring-2 ring-white/10 mb-3" width={80} height={80} />
                 <div className="flex items-center gap-1.5">
                     <h3 className="font-bold text-white text-xl">{creator.name}</h3>
                     <CheckCircle size={16} className="text-blue-400" />
@@ -136,7 +95,7 @@ const Preloader = () => (
 );
 
 
-// --- MAIN PAGE COMPONENT (/app/market/page.tsx) ---
+// --- MAIN PAGE COMPONENT ---
 
 export default function MarketPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -144,10 +103,9 @@ export default function MarketPage() {
   const [sortOption, setSortOption] = useState<SortOption>('trending');
 
   useEffect(() => {
-    // Simulate data fetching
     const timer = setTimeout(() => {
         setIsLoading(false);
-    }, 300); // 100 millisecond delay
+    }, 1500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -169,73 +127,68 @@ export default function MarketPage() {
     );
 
   return (
-    <div className="bg-gray-900 text-gray-200 font-sans min-h-screen bg-gradient-to-b from-gray-900 via-black to-blue-900/20">
+    <>
+        {/* FIXED: Added the <style> tag here, inside the Client Component */}
         <style jsx global>{`
             @keyframes ticker-scroll {
                 0% { transform: translateX(0%); }
                 100% { transform: translateX(-50%); }
             }
         `}</style>
-        
         {isLoading && <Preloader />}
+        <main className={`container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 transition-all duration-700 ease-in-out ${isLoading ? 'blur-lg scale-95 opacity-0' : 'blur-0 scale-100 opacity-100'}`}>
+            <div className="text-center mb-12 lg:mb-16">
+                <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight">Creator Hype Market</h1>
+                <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-400">
+                    Buy and sell creator popularity like stocks — powered by real-time hype.
+                </p>
+            </div>
 
-        <div className={`transition-all duration-700 ease-in-out ${isLoading ? 'blur-lg scale-95 opacity-0' : 'blur-0 scale-100 opacity-100'}`}>
-            <Header />
-            <Ticker />
-            <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-                <div className="text-center mb-12 lg:mb-16">
-                    <h1 className="text-5xl md:text-6xl font-extrabold text-white tracking-tight">Creator Hype Market</h1>
-                    <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-400">
-                        Buy and sell creator popularity like stocks — powered by real-time hype.
-                    </p>
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
+                <div className="relative w-full sm:w-80">
+                    <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
+                    <input 
+                      type="text" 
+                      placeholder="Search by creator name..." 
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="bg-white/5 border border-white/10 rounded-full w-full pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                    />
                 </div>
+                <div className="relative">
+                    <select
+                        value={sortOption}
+                        onChange={(e) => setSortOption(e.target.value as SortOption)}
+                        className="appearance-none bg-white/5 border border-white/10 rounded-full px-5 py-2.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-cyan-500 pr-10"
+                    >
+                        <option value="trending">Sort by: Trending</option>
+                        <option value="price">Sort by: Price</option>
+                        <option value="change">Sort by: Change</option>
+                    </select>
+                    <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+                </div>
+            </div>
 
-                <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
-                    <div className="relative w-full sm:w-80">
-                        <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
-                        <input 
-                          type="text" 
-                          placeholder="Search by creator name..." 
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          className="bg-white/5 border border-white/10 rounded-full w-full pl-11 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                        />
-                    </div>
-                    <div className="relative">
-                        <select
-                            value={sortOption}
-                            onChange={(e) => setSortOption(e.target.value as SortOption)}
-                            className="appearance-none bg-white/5 border border-white/10 rounded-full px-5 py-2.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-cyan-500 pr-10"
-                        >
-                            <option value="trending">Sort by: Trending</option>
-                            <option value="price">Sort by: Price</option>
-                            <option value="change">Sort by: Change</option>
-                        </select>
-                        <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
-                    </div>
+            {filteredAndSortedCreators.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+                    {filteredAndSortedCreators.map(creator => (
+                        <CreatorCard key={creator.id} creator={creator} />
+                    ))}
                 </div>
-
-                {filteredAndSortedCreators.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-                        {filteredAndSortedCreators.map(creator => (
-                            <CreatorCard key={creator.id} creator={creator} />
-                        ))}
-                    </div>
-                ) : (
-                    <div className="text-center py-20">
-                        <p className="text-gray-400 text-lg">No creators found.</p>
-                    </div>
-                )}
-                
-                <div className="text-center mt-20 lg:mt-24 py-16 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
-                    <h2 className="text-3xl font-bold text-white">Ready to Join the Hype?</h2>
-                    <p className="mt-3 text-gray-400 max-w-xl mx-auto">Create your virtual trading portfolio and climb the leaderboard.</p>
-                    <button className="mt-8 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3 px-8 rounded-full transition-all shadow-lg shadow-cyan-500/20 hover:shadow-xl hover:shadow-cyan-500/30 text-lg">
-                        Sign Up Now
-                    </button>
+            ) : (
+                <div className="text-center py-20">
+                    <p className="text-gray-400 text-lg">No creators found.</p>
                 </div>
-            </main>
-        </div>
-    </div>
+            )}
+            
+            <div className="text-center mt-20 lg:mt-24 py-16 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
+                <h2 className="text-3xl font-bold text-white">Ready to Join the Hype?</h2>
+                <p className="mt-3 text-gray-400 max-w-xl mx-auto">Create your virtual trading portfolio and climb the leaderboard.</p>
+                <button className="mt-8 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3 px-8 rounded-full transition-all shadow-lg shadow-cyan-500/20 hover:shadow-xl hover:shadow-cyan-500/30 text-lg">
+                    Sign Up Now
+                </button>
+            </div>
+        </main>
+    </>
   );
 }
